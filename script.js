@@ -1,4 +1,4 @@
-const geoCodingURL = "http://api.openweathermap.org/geo/1.0/direct?limit=1&appid=13abeb5fbf5e7cf5b0407c2eb8b31f08&q=";
+const geoCodingURL = "https://api.openweathermap.org/geo/1.0/direct?limit=1&appid=13abeb5fbf5e7cf5b0407c2eb8b31f08&q=";
 const weatherURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&appid=13abeb5fbf5e7cf5b0407c2eb8b31f08&";
 const apiKey = "13abeb5fbf5e7cf5b0407c2eb8b31f08";
 
