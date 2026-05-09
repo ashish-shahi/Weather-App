@@ -29,32 +29,39 @@ let pres = document.querySelector("#pres");
 let weatherIconSrc = "https://openweathermap.org/payload/api/media/file/";
 let weatherIcon = document.querySelector("#img-div img");
 
-
-// window.addEventListener("load", () => {
-//     infoContainer.style.display = "none";
-// })
-
 btn.addEventListener("click", async () => {
     currDetails.innerHTML = `${dayName}, ${date} ${monthName} ${year}`;
-    let searchVal = search.value;
+
+    const rawSearchVal = search.value.trim();
+    const searchVal = encodeURIComponent(rawSearchVal);
+
     search.value = "";
-    await getCord(geoCodingURL+searchVal);
-    if (infoArr[0] == undefined || searchVal.length < 3) {
+    infoArr = [];
+
+    if (rawSearchVal.length < 3) {
         infoContainerStart.style.display = "none";
         infoContainer.style.display = "none";
         infoContainerError.style.display = "flex";
-        infoArr = [];
         return;
-    };
-    city.innerHTML = searchVal;
+    }
+
+    await getCord(geoCodingURL + searchVal);
+
+    if (infoArr[0] == undefined) {
+        infoContainerStart.style.display = "none";
+        infoContainer.style.display = "none";
+        infoContainerError.style.display = "flex";
+        return;
+    }
+
+    city.innerHTML = rawSearchVal;
     degree.innerText = infoArr[0];
     feels_like.innerText = infoArr[1];
     hum.innerText = infoArr[2];
     win.innerText = infoArr[3];
     pres.innerText = infoArr[4];
-    let finalSrc =  weatherIconSrc+infoArr[5]+".png";
-    weatherIcon.setAttribute("src", finalSrc);
-    infoArr = [];
+    weatherIcon.setAttribute("src", weatherIconSrc + infoArr[5] + ".png");
+
     infoContainerError.style.display = "none";
     infoContainerStart.style.display = "none";
     infoContainer.style.display = "flex";
@@ -63,10 +70,14 @@ btn.addEventListener("click", async () => {
 async function getCord(url) {
     try {
         let res = await axios.get(url);
+
+        if (!res.data || res.data.length === 0) return;
+
         let lat = res.data[0].lat;
         let lon = res.data[0].lon;
         let latLon = "lat=" + lat + "&lon=" + lon;
-        await getWeatherInfo(weatherURL+latLon);
+
+        await getWeatherInfo(weatherURL + latLon);
     } catch (e) {
         console.log(e);
     }
