@@ -21,7 +21,7 @@ Instead of directly searching by city name, the app uses a two-step API approach
 
 ## Live Demo
 
-[View Live](https://yourusername.github.io/weather-app)
+[View Live](https://ashish-shahi.github.io/Weather-App/)
 
 ## API Reference
 
