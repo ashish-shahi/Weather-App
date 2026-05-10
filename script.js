@@ -18,6 +18,7 @@ let city = document.querySelector("#city");
 let currDetails = document.querySelector("#today");
 
 // accessing all the elements
+let pillInfo = document.querySelector("#pill-info");
 let infoContainer = document.querySelector("#info-area");
 let infoContainerStart = document.querySelector("#info-area-start");
 let infoContainerError = document.querySelector("#info-area-error");
@@ -37,7 +38,7 @@ function setValues() {
     win.innerText = infoArr[3];
     pres.innerText = infoArr[4];
     weatherIcon.setAttribute("src", weatherIconSrc + infoArr[5] + ".png");
-
+    pillInfo.innerText = weatherDescr;
     infoContainerError.style.display = "none";
     infoContainerStart.style.display = "none";
     infoContainer.style.display = "flex";
@@ -68,7 +69,7 @@ btn.addEventListener("click", async () => {
         return;
     }
 
-    city.innerHTML = rawSearchVal;
+    city.innerHTML = rawSearchVal.charAt(0).toUpperCase() + rawSearchVal.slice(1).toLowerCase();;
     setValues();
 });
 
@@ -110,6 +111,7 @@ async function getWeatherInfo(url) {
         infoArr.push(Math.round(res.data.wind.speed*3.6));
         infoArr.push(res.data.main.pressure);
         infoArr.push(res.data.weather[0].icon);
+        infoArr.push(res.data.weather[0].description);
     } catch (e) {
         console.log(e);
     }
