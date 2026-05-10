@@ -32,6 +32,10 @@ let weatherIcon = document.querySelector("#img-div img");
 let popBtns = document.querySelectorAll(".pop-city");
 
 function setValues() {
+    let weatherDescr = infoArr[6]
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
     degree.innerText = infoArr[0];
     feels_like.innerText = infoArr[1];
     hum.innerText = infoArr[2];
