@@ -80,7 +80,6 @@ btn.addEventListener("click", async () => {
 for (const btn of popBtns) {
     btn.addEventListener("click", async () => {
         let searchVal = btn.innerText;
-        console.log(searchVal);
         await getCord(geoCodingURL+searchVal);
         currDetails.innerHTML = `${dayName}, ${date} ${monthName} ${year}`;
         city.innerHTML = searchVal;
