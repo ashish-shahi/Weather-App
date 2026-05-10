@@ -342,3 +342,7 @@ hr{
     background-color: #eef1fb;
     color: #3d6fd4
 }
+
+.pop-city {
+    cursor: pointer;
+}
