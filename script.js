@@ -28,6 +28,20 @@ let win = document.querySelector("#win");
 let pres = document.querySelector("#pres");
 let weatherIconSrc = "https://openweathermap.org/payload/api/media/file/";
 let weatherIcon = document.querySelector("#img-div img");
+let popBtns = document.querySelectorAll(".pop-city");
+
+function setValues() {
+    degree.innerText = infoArr[0];
+    feels_like.innerText = infoArr[1];
+    hum.innerText = infoArr[2];
+    win.innerText = infoArr[3];
+    pres.innerText = infoArr[4];
+    weatherIcon.setAttribute("src", weatherIconSrc + infoArr[5] + ".png");
+
+    infoContainerError.style.display = "none";
+    infoContainerStart.style.display = "none";
+    infoContainer.style.display = "flex";
+}
 
 btn.addEventListener("click", async () => {
     currDetails.innerHTML = `${dayName}, ${date} ${monthName} ${year}`;
@@ -55,17 +69,20 @@ btn.addEventListener("click", async () => {
     }
 
     city.innerHTML = rawSearchVal;
-    degree.innerText = infoArr[0];
-    feels_like.innerText = infoArr[1];
-    hum.innerText = infoArr[2];
-    win.innerText = infoArr[3];
-    pres.innerText = infoArr[4];
-    weatherIcon.setAttribute("src", weatherIconSrc + infoArr[5] + ".png");
-
-    infoContainerError.style.display = "none";
-    infoContainerStart.style.display = "none";
-    infoContainer.style.display = "flex";
+    setValues();
 });
+
+for (const btn of popBtns) {
+    btn.addEventListener("click", async () => {
+        let searchVal = btn.innerText;
+        console.log(searchVal);
+        await getCord(geoCodingURL+searchVal);
+        currDetails.innerHTML = `${dayName}, ${date} ${monthName} ${year}`;
+        city.innerHTML = searchVal;
+        setValues();
+        infoArr = [];
+    });
+}
 
 async function getCord(url) {
     try {
