@@ -30,8 +30,10 @@ let pres = document.querySelector("#pres");
 let weatherIconSrc = "https://openweathermap.org/payload/api/media/file/";
 let weatherIcon = document.querySelector("#img-div img");
 let popBtns = document.querySelectorAll(".pop-city");
+let loadContainer = document.querySelector("#load-screen");
 
 function setValues() {
+    loadContainer.style.display = "none";
     let weatherDescr = infoArr[6]
         .split(" ")
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -49,6 +51,9 @@ function setValues() {
 }
 
 btn.addEventListener("click", async () => {
+    infoContainerStart.style.display = "none";
+    infoContainer.style.display = "none";
+    loadContainer.style.display = "flex";
     currDetails.innerHTML = `${dayName}, ${date} ${monthName} ${year}`;
 
     const rawSearchVal = search.value.trim();
@@ -60,6 +65,7 @@ btn.addEventListener("click", async () => {
     if (rawSearchVal.length < 3) {
         infoContainerStart.style.display = "none";
         infoContainer.style.display = "none";
+        loadContainer.style.display = "none";
         infoContainerError.style.display = "flex";
         return;
     }
@@ -69,6 +75,7 @@ btn.addEventListener("click", async () => {
     if (infoArr[0] == undefined) {
         infoContainerStart.style.display = "none";
         infoContainer.style.display = "none";
+        loadContainer.style.display = "none";
         infoContainerError.style.display = "flex";
         return;
     }
@@ -79,6 +86,8 @@ btn.addEventListener("click", async () => {
 
 for (const btn of popBtns) {
     btn.addEventListener("click", async () => {
+        infoContainerStart.style.display = "none";
+        loadContainer.style.display = "flex";
         let searchVal = btn.innerText;
         await getCord(geoCodingURL+searchVal);
         currDetails.innerHTML = `${dayName}, ${date} ${monthName} ${year}`;
